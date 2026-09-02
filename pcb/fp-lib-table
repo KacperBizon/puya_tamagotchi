@@ -1,0 +1,4 @@
+(fp_lib_table
+	(version 7)
+	(lib (name "Tamagotchi_footprints") (type "KiCad") (uri "${KIPRJMOD}/custom_LCSC_parts/Tamagotchi_footprints") (options "") (descr ""))
+)
