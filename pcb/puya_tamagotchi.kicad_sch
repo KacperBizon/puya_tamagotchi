@@ -8123,7 +8123,7 @@
 			)
 			(embedded_fonts no)
 		)
-		(symbol "Tamagotchi_parts:SSD1306_OLED"
+		(symbol "Tamagotchi_parts:SH1107_128x128_OLED"
 			(exclude_from_sim no)
 			(in_bom yes)
 			(on_board yes)
@@ -8151,7 +8151,7 @@
 					(justify left bottom)
 				)
 			)
-			(property "Footprint" "Tamagotchi_footprints:SSD1306_OLED"
+			(property "Footprint" "Tamagotchi_footprints:SH1107_128x128_OLED"
 				(at 16.002 -5.842 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -8185,7 +8185,7 @@
 					)
 				)
 			)
-			(symbol "SSD1306_OLED_1_1"
+			(symbol "SH1107_128x128_OLED_1_1"
 				(rectangle
 					(start 2.54 1.27)
 					(end 13.97 -10.16)
@@ -8197,10 +8197,10 @@
 						(type background)
 					)
 				)
-				(pin power_in line
+				(pin bidirectional line
 					(at 0 0 0)
 					(length 2.54)
-					(name "GND"
+					(name "SDA"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -8215,10 +8215,10 @@
 						)
 					)
 				)
-				(pin power_in line
+				(pin bidirectional line
 					(at 0 -2.54 0)
 					(length 2.54)
-					(name "VCC"
+					(name "SCL"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -8233,10 +8233,10 @@
 						)
 					)
 				)
-				(pin bidirectional line
+				(pin power_in line
 					(at 0 -5.08 0)
 					(length 2.54)
-					(name "SCL"
+					(name "GND"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -8251,10 +8251,10 @@
 						)
 					)
 				)
-				(pin bidirectional line
+				(pin power_in line
 					(at 0 -7.62 0)
 					(length 2.54)
-					(name "SDA"
+					(name "VCC"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -10810,7 +10810,7 @@
 	)
 	(wire
 		(pts
-			(xy 52.07 179.07) (xy 46.99 179.07)
+			(xy 52.07 181.61) (xy 46.99 181.61)
 		)
 		(stroke
 			(width 0)
@@ -10910,7 +10910,7 @@
 	)
 	(wire
 		(pts
-			(xy 52.07 181.61) (xy 46.99 181.61)
+			(xy 52.07 179.07) (xy 46.99 179.07)
 		)
 		(stroke
 			(width 0)
@@ -13664,6 +13664,94 @@
 		)
 	)
 	(symbol
+		(lib_id "Tamagotchi_parts:SH1107_128x128_OLED")
+		(at 46.99 173.99 0)
+		(mirror y)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "1f94ec0f-7b21-4c59-aff2-991fa9bd715c")
+		(property "Reference" "U2"
+			(at 38.735 167.64 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "OLED_SH1107_128X128"
+			(at 38.735 170.18 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Tamagotchi_footprints:SH1107_128x128_OLED"
+			(at 30.988 179.832 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Datasheet" ""
+			(at 46.99 173.99 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 46.99 173.99 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "4"
+			(uuid "f807eb20-0ae0-455b-8bbc-da20c34558de")
+		)
+		(pin "2"
+			(uuid "b403b7a4-b804-4cca-9304-b59f4ae5b34e")
+		)
+		(pin "1"
+			(uuid "71893cad-0651-4e7b-817a-c0dd38032e41")
+		)
+		(pin "3"
+			(uuid "ae0c60e6-ddf7-487c-8409-503b698fde11")
+		)
+		(instances
+			(project "puya_tamagotchi"
+				(path "/14e76ab0-d438-4b0a-9510-82497b49bc08"
+					(reference "U2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "PCM_JLCPCB-Capacitors:0603,4.7uF")
 		(at 106.68 99.06 0)
 		(unit 1)
@@ -14212,7 +14300,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 52.07 181.61 90)
+		(at 52.07 179.07 90)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -14222,7 +14310,7 @@
 		(dnp no)
 		(uuid "29ea0388-cd8f-4c91-b974-dc7d041dc67a")
 		(property "Reference" "#PWR010"
-			(at 58.42 181.61 0)
+			(at 58.42 179.07 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -14233,7 +14321,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 57.404 181.61 90)
+			(at 57.404 179.07 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -14243,7 +14331,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 52.07 181.61 0)
+			(at 52.07 179.07 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -14254,7 +14342,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 52.07 181.61 0)
+			(at 52.07 179.07 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -14265,7 +14353,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 52.07 181.61 0)
+			(at 52.07 179.07 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -17581,7 +17669,7 @@
 	)
 	(symbol
 		(lib_id "power:VCC")
-		(at 52.07 179.07 270)
+		(at 52.07 181.61 270)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -17592,7 +17680,7 @@
 		(fields_autoplaced yes)
 		(uuid "6146c1c3-7264-4ae9-8546-a9a80fe2e6dd")
 		(property "Reference" "#PWR044"
-			(at 48.26 179.07 0)
+			(at 48.26 181.61 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -17603,7 +17691,7 @@
 			)
 		)
 		(property "Value" "VCC"
-			(at 55.88 179.0699 90)
+			(at 55.88 181.6099 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -17614,7 +17702,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 52.07 179.07 0)
+			(at 52.07 181.61 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -17625,7 +17713,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 52.07 179.07 0)
+			(at 52.07 181.61 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -17636,7 +17724,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"VCC\""
-			(at 52.07 179.07 0)
+			(at 52.07 181.61 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -22316,93 +22404,6 @@
 			(project "puya_tamagotchi"
 				(path "/14e76ab0-d438-4b0a-9510-82497b49bc08"
 					(reference "D4")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Tamagotchi_parts:SSD1306_OLED")
-		(at 46.99 181.61 180)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "cd2dda40-939e-4014-9711-983e5affd16d")
-		(property "Reference" "U2"
-			(at 38.735 166.37 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "OLED_128x64_SSD1306"
-			(at 38.735 168.91 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Tamagotchi_footprints:SSD1306_OLED"
-			(at 30.988 175.768 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left bottom)
-			)
-		)
-		(property "Datasheet" ""
-			(at 46.99 181.61 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" ""
-			(at 46.99 181.61 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "30f29d16-924e-4d3d-a3a0-ad842cda07fc")
-		)
-		(pin "4"
-			(uuid "d25fab9f-f923-43b7-825a-5b9d6b094793")
-		)
-		(pin "3"
-			(uuid "3748b203-501c-4eff-98dc-0268b8741746")
-		)
-		(pin "2"
-			(uuid "b700dbdf-22b5-4532-aa99-ccc498ecfd6f")
-		)
-		(instances
-			(project "puya_tamagotchi"
-				(path "/14e76ab0-d438-4b0a-9510-82497b49bc08"
-					(reference "U2")
 					(unit 1)
 				)
 			)
