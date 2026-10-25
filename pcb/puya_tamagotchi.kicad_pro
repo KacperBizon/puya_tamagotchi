@@ -60,10 +60,10 @@
           "hatch_smoothing_level": 0,
           "hatch_smoothing_value": 0.1,
           "hatch_thickness": 1.0,
-          "min_clearance": 0.5,
+          "min_clearance": 0.3,
           "min_island_area": 10.0,
           "min_thickness": 0.25,
-          "pad_connection": 1,
+          "pad_connection": 2,
           "remove_islands": 0,
           "thermal_relief_gap": 0.5,
           "thermal_relief_spoke_width": 0.5
@@ -76,7 +76,32 @@
           "width": 0.0
         }
       ],
-      "drc_exclusions": [],
+      "drc_exclusions": [
+        [
+          "footprint_type_mismatch|104750000|69700000|abac314f-a02c-45ed-9445-a0b13ddc7d76|00000000-0000-0000-0000-000000000000",
+          "Intentional: SMD with thermal vias"
+        ],
+        [
+          "missing_courtyard|86190000|34000000|95825ca9-ff86-4a38-a871-3f9032e8c6b2|00000000-0000-0000-0000-000000000000",
+          "Intentional: Screen on top"
+        ],
+        [
+          "silk_edge_clearance|114500000|50520000|7dad87b1-b0fc-4d90-b8df-f7c26cad1169|3169792d-6c36-4d3c-9190-3082ed2c9d08",
+          "Intentional: USB-C connector overhang"
+        ],
+        [
+          "silk_edge_clearance|114500000|59680000|7dad87b1-b0fc-4d90-b8df-f7c26cad1169|4c118786-67d1-4290-afaa-6138fe2730e8",
+          "Intentional: USB-C connector overhang"
+        ],
+        [
+          "silk_over_copper|112450000|50520000|8c89f2e2-98ad-4a59-9c0c-28a338d97115|195c9578-c3a5-4dcc-bf4d-15ef963f1cc4",
+          "USB C"
+        ],
+        [
+          "silk_over_copper|112450000|59680000|8f660b5b-6aa8-483e-b0a8-39c379c96ca4|fe6e8f87-c820-4c0c-93f7-a2c9c866fa1e",
+          "USB C"
+        ]
+      ],
       "meta": {
         "version": 2
       },
@@ -154,7 +179,7 @@
         "min_hole_to_hole": 0.25,
         "min_microvia_diameter": 0.2,
         "min_microvia_drill": 0.1,
-        "min_resolved_spokes": 2,
+        "min_resolved_spokes": 1,
         "min_silk_clearance": 0.0,
         "min_text_height": 0.8,
         "min_text_thickness": 0.08,
