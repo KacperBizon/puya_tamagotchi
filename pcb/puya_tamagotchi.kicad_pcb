@@ -5700,10 +5700,9 @@
 		(descr "Resistor SMD 0402 (1005 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: IPC-SM-782 page 72, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf), generated with kicad-footprint-generator")
 		(tags "resistor")
 		(property "Reference" "R10"
-			(at -1.05 -0.85 0)
+			(at -1.209999 0.999999 0)
 			(layer "F.SilkS")
-			(hide yes)
-			(uuid "05aa5071-a4b8-4911-bbcc-f2705b02ca8e")
+			(uuid "1eb57636-05ef-49ef-bfb2-dc970f286f15")
 			(effects
 				(font
 					(size 0.8 0.8)
@@ -5713,10 +5712,9 @@
 			)
 		)
 		(property "Value" "5.1kΩ"
-			(at 0 0.199999 0)
+			(at 0 1.799999 0)
 			(layer "F.Fab")
-			(hide yes)
-			(uuid "176b066e-408a-445b-bfbc-605096226a25")
+			(uuid "5bb1b31c-a360-42e3-bf33-31238ae0a023")
 			(effects
 				(font
 					(size 0.25 0.25)
@@ -5729,7 +5727,7 @@
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "4e56fc2b-6b02-45f0-9a98-3d9fa6b978f5")
+			(uuid "e1caab32-9aa3-4164-9749-2225f67e8bdb")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5742,7 +5740,7 @@
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "46371157-b4eb-4da7-9a17-722da0eabf15")
+			(uuid "d8b79f02-d061-4123-83e2-f8fe23b16fa1")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6085,10 +6083,9 @@
 		(descr "Resistor SMD 0402 (1005 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: IPC-SM-782 page 72, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf), generated with kicad-footprint-generator")
 		(tags "resistor")
 		(property "Reference" "R11"
-			(at -1.05 -0.85 0)
+			(at -1.209999 -1.199999 0)
 			(layer "F.SilkS")
-			(hide yes)
-			(uuid "d06f958d-d389-4108-b38d-5660f9d84f35")
+			(uuid "f50285f9-cdf4-4218-97dd-54eed2a256aa")
 			(effects
 				(font
 					(size 0.8 0.8)
@@ -6098,10 +6095,9 @@
 			)
 		)
 		(property "Value" "5.1kΩ"
-			(at 0 0.199999 0)
+			(at -0.009999 -1.999999 0)
 			(layer "F.Fab")
-			(hide yes)
-			(uuid "12e22e71-6faf-473d-920c-f0e063964e40")
+			(uuid "cae7ab72-445d-47e3-b26f-c3813cf8507b")
 			(effects
 				(font
 					(size 0.25 0.25)
@@ -6114,7 +6110,7 @@
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "61491c36-8c54-4533-8992-83b2618da098")
+			(uuid "288ea736-fde1-4ee3-934e-d1bec139e698")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6127,7 +6123,7 @@
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "3ed7647e-b693-499b-8747-737799c4913e")
+			(uuid "9200547f-e87f-40dc-864f-a88f58300ada")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -20457,6 +20453,32 @@
 		(layer "Edge.Cuts")
 		(uuid "7dad87b1-b0fc-4d90-b8df-f7c26cad1169")
 	)
+	(gr_text "-"
+		(at 97.8 28.6 0)
+		(layer "F.SilkS")
+		(uuid "a6d49666-828f-44c8-b6a4-91f4f50b8de5")
+		(effects
+			(font
+				(size 0.85 0.85)
+				(thickness 0.15)
+				(bold yes)
+			)
+			(justify left bottom)
+		)
+	)
+	(gr_text "+"
+		(at 100.2 28.6 0)
+		(layer "F.SilkS")
+		(uuid "0aa515cd-68ee-4cc6-b71f-0706561c53b7")
+		(effects
+			(font
+				(size 0.85 0.85)
+				(thickness 0.15)
+				(bold yes)
+			)
+			(justify left bottom)
+		)
+	)
 	(gr_text "SWCLK\n"
 		(at 73.725 69.7 0)
 		(layer "F.SilkS")
@@ -20575,6 +20597,32 @@
 		(at 89.6 29.5 0)
 		(layer "B.SilkS")
 		(uuid "8fb175ad-3367-4fa1-9c55-bac5c3b6fbd9")
+		(effects
+			(font
+				(size 0.85 0.85)
+				(thickness 0.15)
+				(bold yes)
+			)
+			(justify left bottom mirror)
+		)
+	)
+	(gr_text "-"
+		(at 99 28.6 0)
+		(layer "B.SilkS")
+		(uuid "abbef8cf-828f-4bd4-8258-c98a84368890")
+		(effects
+			(font
+				(size 0.85 0.85)
+				(thickness 0.15)
+				(bold yes)
+			)
+			(justify left bottom mirror)
+		)
+	)
+	(gr_text "+"
+		(at 101.4 28.6 0)
+		(layer "B.SilkS")
+		(uuid "62f05481-b12f-4bb9-8068-8f94d0002aa9")
 		(effects
 			(font
 				(size 0.85 0.85)
