@@ -12,17 +12,21 @@
  * What it does:
  *   BUTTON_1 held     -> red LED on
  *   BUTTON_2 held     -> white LED on
- *   BUTTON_3 held     -> buzzer tone; frequency steps 1k/2k/3k/4k Hz on each release
+ *   BUTTON_3 pressed  -> buzzer plays a short chime (melody defined below as notes)
  *   BUTTON_4 pressed  -> toggles LDR power (PA3)
  *   OLED shows button states, raw pin levels, LED states, LDR power,
  *   ADC value / percent / bar, buzzer state and frequency.
  *
+ * Modules: timebase.c (SysTick), i2c.c (I2C1 driver), oled.c (SH1107 display),
+ *          buzzer.c (PWM melody player).
+ * Display panel options live in oled.c, I2C speed in i2c.c.
  */
 #include <stdint.h>
 #include "py32.h"
 #include "timebase.h"
 #include "i2c.h"
 #include "oled.h"
+#include "buzzer.h"
 
 /* ------------------------- board configuration -------------------------- */
 #define DEBOUNCE_MS      20u
@@ -36,16 +40,6 @@
 #define GPIO_IDR(b)      REG32((b) + 0x10)
 #define GPIO_BSRR(b)     REG32((b) + 0x18)
 #define GPIO_AFRL(b)     REG32((b) + 0x20)
-
-#define TIM1_BASE        0x40012C00UL
-#define TIM1_CR1         REG32(TIM1_BASE + 0x00)
-#define TIM1_EGR         REG32(TIM1_BASE + 0x14)
-#define TIM1_CCMR1       REG32(TIM1_BASE + 0x18)
-#define TIM1_CCER        REG32(TIM1_BASE + 0x20)
-#define TIM1_PSC         REG32(TIM1_BASE + 0x28)
-#define TIM1_ARR         REG32(TIM1_BASE + 0x2C)
-#define TIM1_CCR2        REG32(TIM1_BASE + 0x38)
-#define TIM1_BDTR        REG32(TIM1_BASE + 0x44)
 
 #define ADC_BASE         0x40012400UL
 #define ADC_ISR          REG32(ADC_BASE + 0x00)
@@ -148,31 +142,11 @@ static void gpio_init(void)
     gpio_mode(GPIOB_BASE, 4, MODE_AF);
 }
 
-/* ------------------------------- buzzer --------------------------------- */
-/* TIM1 clock 24 MHz, PSC = 23 -> 1 MHz tick. ARR = 1e6/f - 1 (precomputed: no division). */
-static const uint16_t tone_hz[4]  = { 1000, 2000, 3000, 4000 };
-static const uint16_t tone_arr[4] = {  999,  499,  332,  249 };
-
-static void buzzer_init(void)
-{
-    RCC_APBENR2 |= (1u << 11);              /* TIM1EN */
-    TIM1_PSC   = 23;
-    TIM1_ARR   = 999;
-    TIM1_CCR2  = 0;                         /* duty 0 = silent (pin stays low) */
-    TIM1_CCMR1 = (6u << 12) | (1u << 11);   /* OC2M = PWM mode 1, OC2PE preload */
-    TIM1_CCER  = (1u << 4);                 /* CC2E: channel 2 output on */
-    TIM1_BDTR  = (1u << 15);                /* MOE: main output enable (advanced timer) */
-    TIM1_CR1   = (1u << 7);                 /* ARPE */
-    TIM1_EGR   = 1u;                        /* UG: load PSC/ARR/CCR */
-    TIM1_CR1  |= 1u;                        /* CEN */
-}
-
-static void buzzer_set(unsigned idx, int on)
-{
-    if (!on) { TIM1_CCR2 = 0; return; }
-    TIM1_ARR  = tone_arr[idx];
-    TIM1_CCR2 = (uint32_t)(tone_arr[idx] + 1u) >> 1;   /* 50 % duty */
-}
+/* ------------------------------- melodies ------------------------------- */
+/* Note name + octave, duration in ms. CS4 = C#4. REST = pause. See buzzer.h. */
+static const buzzer_step_t chime_test[] = {
+    NOTE(E6, 90), NOTE(G6, 90), NOTE(C7, 90), NOTE(E7, 420),
+};
 
 /* --------------------------------- ADC ---------------------------------- */
 static int adc_init(void)
@@ -249,7 +223,7 @@ static int ui_static(void)
     return oled_text(0,  "PY32F002B PERIPH TEST") &&
            oled_text(2,  "BUTTONS  # = PRESSED") &&
            oled_text(14, "B1 RED    B2 WHITE") &&
-           oled_text(15, "B3 BUZZ   B4 LDR PWR");
+           oled_text(15, "B3 CHIME  B4 LDR PWR");
 }
 
 /* -------------------------------- main ---------------------------------- */
@@ -259,8 +233,7 @@ int main(void)
     uint32_t t_change = 0, t_adc = 0, t_retry = 0;
     uint16_t adc_val = 0;
     int      adc_ok = 0, adc_have = 0, oled_ok = 0;
-    int      ldr_on = 1, red = 0, white = 0, buzz = 0;
-    unsigned tone_idx = 0;
+    int      ldr_on = 1, red = 0, white = 0;
     char     line[OLED_COLS + 1];
     char    *p;
 
@@ -268,6 +241,7 @@ int main(void)
     timebase_init();
     gpio_init();
     buzzer_init();
+    timebase_set_tick_hook(buzzer_tick);   /* melody timing runs from the SysTick */
     adc_ok = adc_init();
     i2c_init();
 
@@ -285,7 +259,6 @@ int main(void)
         if (down != stable && (now - t_change) >= DEBOUNCE_MS) {
             uint8_t prev = stable;
             uint8_t pressed  = (uint8_t)(down & ~prev);
-            uint8_t released = (uint8_t)(~down & prev & 0xFu);
             stable = down;
 
             red   = (stable & 0x1) != 0;                 /* BUTTON_1 */
@@ -293,9 +266,7 @@ int main(void)
             led_red(red);
             led_white(white);
 
-            if (released & 0x4) tone_idx = (tone_idx + 1u) & 3u;   /* BUTTON_3 release: next tone */
-            buzz = (stable & 0x4) != 0;
-            buzzer_set(tone_idx, buzz);
+            if (pressed & 0x4) buzzer_play_song(chime_test);   /* BUTTON_3 */
 
             if (pressed & 0x8) { ldr_on = !ldr_on; ldr_power(ldr_on); }   /* BUTTON_4 */
         }
@@ -349,17 +320,14 @@ int main(void)
                 ok = ok && oled_text(9, "ADC ERROR");
             }
 
-            p = put_str(line, "BUZZER:");              /* row 12 */
-            p = put_str(p, buzz ? "ON " : "OFF");
-            p = put_str(p, " ");
-            p = put_dec4(p, tone_hz[tone_idx]);
-            p = put_str(p, "HZ");
+            p = put_str(line, "BUZZER: ");             /* row 12 */
+            p = put_str(p, buzzer_playing() ? "PLAYING" : "IDLE");
             *p = 0;
             ok = ok && oled_text(12, line);
 
             if (!ok) { oled_ok = 0; t_retry = now; }
         } else if ((now - t_retry) >= 1000u) {
-            t_retry = now;
+            t_retry = now;                               /* display missing: retry every second */
             oled_ok = oled_init() && ui_static();
         }
     }

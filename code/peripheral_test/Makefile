@@ -5,7 +5,7 @@ CFLAGS  = -mcpu=cortex-m0plus -mthumb -O2 -Wall -ffreestanding -ffunction-sectio
 LDFLAGS = -T linker.ld -nostdlib -Wl,--gc-sections
 
 TARGET  = firmware
-OBJS    = main.o startup.o timebase.o i2c.o oled.o
+OBJS    = main.o startup.o timebase.o i2c.o oled.o buzzer.o
 
 all: $(TARGET).bin
 

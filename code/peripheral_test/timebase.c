@@ -6,9 +6,17 @@
 #define SYST_CVR  REG32(0xE000E018UL)
 
 static volatile uint32_t g_ms;
+static void (* volatile g_hook)(void);
 
 /* Overrides the weak handler in startup.c */
-void SysTick_Handler(void) { g_ms++; }
+void SysTick_Handler(void)
+{
+    void (*hook)(void) = g_hook;
+    g_ms++;
+    if (hook) hook();
+}
+
+void timebase_set_tick_hook(void (*hook)(void)) { g_hook = hook; }
 
 void timebase_init(void)
 {
